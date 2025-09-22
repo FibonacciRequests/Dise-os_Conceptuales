@@ -1,0 +1,69 @@
+CREATE DATABASE Vuelos;
+USE Vuelos;
+
+CREATE TABLE Cliente
+( Ci INTEGER NOT NULL,
+  Nombre VARCHAR(20) NOT NULL,
+  Apellidos VARCHAR(20) NOT NULL,
+  Direccion VARCHAR(30),
+  Telefono INTEGER,
+  TarjetaCredito INTEGER NOT NULL,
+  PRIMARY KEY(Ci)
+  
+);
+
+CREATE TABLE NotaReserva
+( NroReserva INTEGER NOT NULL,
+  FechaReserva DATE NOT NULL,
+  PlazasReservadas TINYINT NOT NULL,
+  CiCliente INTEGER NOT NULL,
+  CodigoVuelo INTEGER NOT NULL,
+  FOREIGN KEY(CiCliente) REFERENCES Cliente(Ci),
+  
+  FOREIGN KEY(CodigoVuelo) REFERENCES Vuelo(CodigoVuelo)
+  
+  
+);
+
+CREATE TABLE Vuelo
+( Codigo INTEGER NOT NULL,
+  Fecha DATE NOT NULL,
+  HoraSalida VARCHAR(8) NOT NULL,
+  HoraLlegada VARCHAR(8) NOT NULL,
+  CoAS INTEGER NOT NULL,
+  CoAL INTEGER NOT NULL,
+  CoAv INTEGER NOT NULL,
+  PRIMARY KEY(CODIGO),
+  FOREIGN KEY(CoAs) REFERENCES AeroPuertos(Codigo),
+  FOREIGN KEY(CoAL) REFERENCES AeroPuertos(Codigo),
+  FOREIGN KEY(CoAv) REFERENCES Avion(Codigo)
+  
+);
+
+CREATE TABLE TarjetaEmbarque
+( NroReserva INTEGER NOT NULL,
+  Id INTEGER NOT NULL,
+  Fila TINYINT NOT NULL,
+  Columna TINYINT NOT NULL,
+  Planta TINYINT NOT NULL,
+  CiCliente INTEGER NOT NULL,
+  PRIMARY KEY(NroReserva,Id),
+  FOREIGN KEY(CiCliente) REFERENCES Cliente(Ci)
+);
+
+CREATE TABLE AeroPuertos
+( Codigo INTEGER NOT NULL,
+  Nombre VARCHAR(20) NOT NULL,
+  Localidad VARCHAR (40) NOT NULL,
+  Pais VARCHAR (12) NOT NULL,
+  PRIMARY KEY(CODIGO)
+);
+
+CREATE TABLE Avion 
+( Codigo INTEGER NOT NULL,
+  NroPlazas TINYINT NOT NULL,
+  PRIMARY KEY(Codigo)
+);
+
+
+
